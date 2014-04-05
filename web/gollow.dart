@@ -25,9 +25,7 @@ void main() {
   greenCells.initPopulation(cells~/1.1);
   blueCells.initPopulation(cells~/1.2);
   yellowCells.initPopulation(cells~/1.3);
-
-  new Timer.periodic(new Duration(milliseconds: 1000), (timer) => updateAll());
-  new Timer.periodic(new Duration(milliseconds: 500), (timer) => drawAll());
+  updateAll();
 }
 
 // Draw all the 4 cultures.
@@ -45,6 +43,8 @@ void drawAll() {
 // Update all the cultures.
 void updateAll() {
   cultures.forEach((c)=>c.update());
+  drawAll();
+  Timer.run(updateAll);
 }
 
 // Draw out all cells in the culture.

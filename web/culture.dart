@@ -67,16 +67,16 @@ class cell {
   int getNeighbours() {
     int n = 0;
 
-    if (isNeighbourPopulated(x - 1, y - 1)) n++;
-    if (isNeighbourPopulated(x, y - 1)) n++;
-    if (isNeighbourPopulated(x + 1, y - 1)) n++;
-
-    if (isNeighbourPopulated(x - 1, y)) n++;
-    if (isNeighbourPopulated(x + 1, y)) n++;
-
-    if (isNeighbourPopulated(x - 1, y + 1)) n++;
-    if (isNeighbourPopulated(x, y + 1)) n++;
-    if (isNeighbourPopulated(x + 1, y + 1)) n++;
+    for (int i=-1; i<=1; i++) {
+      for (int j=-1; j<=1; j++) {
+        if (i == 0 && j == 0) {
+          continue;
+        }
+        if (isNeighbourPopulated(x + i, y + j)) {
+          n++;
+        }
+      }
+    }
 
     //print("$n");
     return n;
