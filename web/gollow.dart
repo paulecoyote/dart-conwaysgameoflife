@@ -3,8 +3,8 @@ import 'dart:async';
 import 'culture.dart';
 import 'dart:math';
 
-var ce;
-var c2d;
+CanvasElement ce;
+CanvasRenderingContext2D c2d;
 var rng = new Random();
 
 var redCells = new culture();
@@ -12,11 +12,13 @@ var greenCells = new culture();
 var blueCells = new culture();
 var yellowCells = new culture();
 var cultures = [redCells,greenCells,blueCells,yellowCells];
+Stopwatch stopWatch = new Stopwatch();
+var lastTime = null;
 
 // Main Entry point.
 void main() {
 
-  ce = querySelector('#surface');
+  CanvasElement ce = querySelector('#surface');
   c2d = ce.getContext("2d");
 
   int cells = 699 + rng.nextInt(99);
@@ -25,12 +27,13 @@ void main() {
   greenCells.initPopulation(cells~/1.1);
   blueCells.initPopulation(cells~/1.2);
   yellowCells.initPopulation(cells~/1.3);
+  stopWatch.start();
+  lastTime = stopWatch.elapsedMicroseconds;
   updateAll();
 }
 
 // Draw all the 4 cultures.
 void drawAll() {
-
   c2d.setFillColorRgb(0, 0, 0);
   c2d.fillRect(0, 0, 800, 800);
 
@@ -38,6 +41,13 @@ void drawAll() {
   draw(greenCells, false, true, false);
   draw(blueCells, false, false, true);
   draw(yellowCells, true, true, false);
+
+  c2d.setFillColorRgb(255, 255, 255);
+  var newTime = stopWatch.elapsedMicroseconds;
+  var diff = newTime - lastTime;
+  var fps = 1000000 / (diff);
+  c2d.fillText("FPS: ${fps.toStringAsFixed(1)}", 10, 10);
+  lastTime = newTime;
 }
 
 // Update all the cultures.
