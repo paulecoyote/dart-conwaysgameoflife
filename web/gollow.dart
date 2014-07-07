@@ -29,7 +29,7 @@ void main() {
   yellowCells.initPopulation(cells~/1.3);
   stopWatch.start();
   lastTime = stopWatch.elapsedMicroseconds;
-  updateAll();
+  window.animationFrame.then(updateAll);
 }
 
 // Draw all the 4 cultures.
@@ -51,10 +51,10 @@ void drawAll() {
 }
 
 // Update all the cultures.
-void updateAll() {
+void updateAll(num delta) {
   cultures.forEach((c)=>c.update());
   drawAll();
-  Timer.run(updateAll);
+  window.animationFrame.then(updateAll);
 }
 
 // Draw out all cells in the culture.
